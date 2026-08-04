@@ -336,29 +336,50 @@
 
   const dock = $(".dock");
   if (dock && matchMedia("(pointer: fine)").matches) {
+    const links = $$(".dock-link", dock);
+    const centers = new Array(links.length);
+    const prevS = new Float32Array(links.length);
+    const recache = () => {
+      for (let i = 0; i < links.length; i++) {
+        centers[i] = links[i].offsetLeft + links[i].offsetWidth / 2;
+      }
+    };
+    recache();
+    window.addEventListener("resize", recache);
+
     let raf = null;
-    const magnify = (e) => {
+    let lastEvt = null;
+    const magnify = () => {
+      raf = null;
       const rect = dock.getBoundingClientRect();
-      const cx = e.clientX - rect.left;
-      dock.querySelectorAll(".dock-link").forEach((link) => {
-        const r = link.getBoundingClientRect();
-        const dx = cx - (r.left - rect.left + r.width / 2);
+      const cx = lastEvt.clientX - rect.left;
+      links.forEach((link, i) => {
+        const dx = cx - centers[i];
         const d = Math.min(Math.abs(dx), 170);
         const s = 1 + 0.22 * (1 - d / 170);
+        if (Math.abs(s - prevS[i]) < 0.001) return;
+        prevS[i] = s;
         link.style.setProperty("--s", s.toFixed(3));
-        link.classList.toggle("hot", s > 1.1);
+        const hot = s > 1.1;
+        if (link.classList.contains("hot") !== hot) link.classList.toggle("hot", hot);
       });
     };
     dock.addEventListener("pointermove", (e) => {
+      lastEvt = e;
       if (raf) return;
-      raf = requestAnimationFrame(() => { magnify(e); raf = null; });
+      raf = requestAnimationFrame(magnify);
     }, { passive: true });
-    dock.addEventListener("pointerleave", () => {
-      dock.querySelectorAll(".dock-link").forEach((link) => {
-        link.style.setProperty("--s", "1");
-        link.classList.remove("hot");
+    const reset = () => {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      links.forEach((link, i) => {
+        if (prevS[i] !== 1) {
+          prevS[i] = 1;
+          link.style.setProperty("--s", "1");
+          link.classList.remove("hot");
+        }
       });
-    });
+    };
+    dock.addEventListener("pointerleave", reset);
   }
 
   /* ---------------- iOS-style tap bounce (delegated) ---------------- */

@@ -534,7 +534,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   padding: 20px; background: var(--bar);
   transition: transform 0.25s var(--spring), box-shadow 0.3s var(--ease), border-color 0.2s;
 }
-.interest-card:hover { border-color: rgba(10, 132, 255, 0.4); transform: translateY(-3px); box-shadow: var(--shadow); }
+.interests-grid .interest-card:hover { border-color: rgba(10, 132, 255, 0.4); transform: translateY(-3px) scale(1.03); box-shadow: var(--shadow); }
 .interest-icon { font-size: 24px; margin-bottom: 8px; display: inline-block; transition: transform 0.3s var(--spring); }
 .interest-card:hover .interest-icon { transform: scale(1.2) rotate(-6deg); }
 .interest-card h4 { font-size: 15px; margin-bottom: 3px; }
@@ -756,7 +756,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 @media (hover: none) {
   .window:hover { box-shadow: var(--shadow); }
   .sc:hover .sc-ico { transform: none; }
-  .interest-card:hover { transform: none; }
+  .interest-card:hover, .interests-grid .interest-card:hover { transform: none; }
   .edu-card:hover { transform: none; }
 }
 
