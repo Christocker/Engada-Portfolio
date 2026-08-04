@@ -254,6 +254,17 @@
   const modalLinks = $("#modalLinks");
   let lastFocused = null;
 
+  let lockPad = 0;
+  const lockScroll = () => {
+    lockPad = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = lockPad + "px";
+  };
+  const unlockScroll = () => {
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+  };
+
   const openModal = (id) => {
     const p = PROJECTS.find((x) => x.id === id);
     if (!p) return;
@@ -274,7 +285,7 @@
 
     modal.classList.remove("closing");
     modal.hidden = false;
-    document.body.style.overflow = "hidden";
+    lockScroll();
     $(".modal-close", modal).focus();
   };
 
@@ -284,7 +295,7 @@
     setTimeout(() => {
       modal.hidden = true;
       modal.classList.remove("closing");
-      document.body.style.overflow = "";
+      unlockScroll();
       if (lastFocused) lastFocused.focus();
     }, 200);
   };
@@ -360,6 +371,36 @@
     void el.offsetWidth;
     el.classList.add("bouncing");
     el.addEventListener("animationend", () => el.classList.remove("bouncing"), { once: true });
+  });
+
+  /* ---------------- Smooth scroll (in-page buttons) ---------------- */
+
+  const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const smoothScrollTo = (y, dur = 650) => {
+    const start = window.scrollY;
+    const diff = y - start;
+    if (Math.abs(diff) < 2) return;
+    scrollAnim && cancelAnimationFrame(scrollAnim);
+    const t0 = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - t0) / dur, 1);
+      window.scrollTo(0, start + diff * easeInOutCubic(p));
+      if (p < 1) scrollAnim = requestAnimationFrame(step);
+    };
+    scrollAnim = requestAnimationFrame(step);
+  };
+  let scrollAnim = null;
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute("href").slice(1);
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    const target = Math.max(el.getBoundingClientRect().top + window.scrollY - 46, 0);
+    smoothScrollTo(target);
   });
 
   /* ---------------- Contact form: proper mailto ---------------- */

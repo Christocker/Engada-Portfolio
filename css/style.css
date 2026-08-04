@@ -31,7 +31,11 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--menubar-h) + 14px); }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--menubar-h) + 14px);
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   background: #dbe4ef;
@@ -40,6 +44,7 @@ body {
   font-size: 15.5px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 }
 
@@ -643,6 +648,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 .modal-win {
   position: relative; z-index: 1;
   width: 100%; max-width: 640px; max-height: 86vh; overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--win);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -710,6 +716,10 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 
 /* ---------------- Responsive ---------------- */
 
+@media (min-width: 1280px) {
+  .desktop-content { max-width: 1140px; }
+}
+
 @media (max-width: 900px) {
   .win-row { grid-template-columns: 1fr; }
   .about-body { grid-template-columns: 1fr; }
@@ -717,6 +727,40 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .contact-body { grid-template-columns: 1fr; gap: 34px; }
   .menubar-nav { display: none; }
   .welcome-body { padding: 40px 28px 34px; }
+}
+
+@media (max-width: 640px) {
+  .desktop { padding: calc(var(--menubar-h) + 14px) 12px calc(var(--dock-h) + 46px + env(safe-area-inset-bottom, 0px)); }
+  .desktop-content { gap: 34px; }
+  .toolbar { flex-direction: column; }
+  .search { min-width: 100%; }
+  .sel { width: 100%; }
+  .sel select { flex: 1; }
+  .title { font-size: 14px; }
+  .win-body { padding: 24px 18px; }
+  .welcome-body { padding: 32px 22px 28px; }
+  .dock { bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .modal-meta { grid-template-columns: 1fr 1fr; }
+  .modal-body { padding: 22px 20px; }
+  .contact-socials a { width: 100%; }
+}
+
+@media (max-width: 400px) {
+  .shortcuts { gap: 8px; }
+  .sc { width: 64px; }
+  .welcome h1 { font-size: 48px; }
+  .actions .btn { width: 100%; }
+  .interests-grid { grid-template-columns: 1fr; }
+  .dock { gap: 6px; padding: 6px 8px; }
+  .dico { width: 36px; height: 36px; font-size: 18px; }
+  .dock-sep { display: none; }
+}
+
+@media (hover: none) {
+  .window:hover { box-shadow: var(--shadow); }
+  .sc:hover .sc-ico { transform: none; }
+  .interest-card:hover { transform: none; }
+  .edu-card:hover { transform: none; }
 }
 
 @media (max-width: 560px) {
@@ -729,7 +773,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .entry-meta { flex-direction: row; align-items: center; justify-content: space-between; }
   .specs { flex-direction: column; }
   .specs span + span { border-left: none; border-top: 1px solid var(--border); }
-  .dock { padding: 7px 9px; gap: 9px; }
-  .dico { width: 44px; height: 44px; font-size: 21px; }
-  .dock-sep { height: 36px; }
+  .dock { padding: 7px 8px; gap: 7px; }
+  .dico { width: 40px; height: 40px; font-size: 19px; }
+  .dock-sep { height: 36px; margin: 0 2px; }
 }
