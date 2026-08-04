@@ -179,46 +179,46 @@ const INTERESTS = [
   {
     icon: "\uD83D\uDD27",
     title: "Hardware Tinkering",
-    text: "Arduino and ESP32 side quests, breadboard experiments, and taking things apart just to understand how they tick \u2014 robots, sensors, and repair projects included.",
+    text: "Arduino builds, repairs, and the occasional teardown.",
   },
   {
     icon: "\uD83D\uDCBB",
     title: "Programming",
-    text: "Little projects across Python, C++, and the web \u2014 I ship small things just to see them run and to keep my skills sharp.",
+    text: "Small projects in Python, C++, and the web.",
   },
   {
     icon: "\uD83C\uDFAE",
     title: "Narrative Games",
-    text: "Visual novels and story-driven games \u2014 I play them, and I\u2019m exploring writing branching plots and dialogue with Ren\u2019Py.",
+    text: "Story-driven games and Ren\u2019Py experiments.",
   },
   {
     icon: "\uD83D\uDC85",
     title: "Web & UI Polish",
-    text: "Interfaces that feel finished: typography, spacing, micro-interactions, and the last 5% of detail that makes a site feel designed.",
+    text: "Interfaces that feel fast and finished.",
   },
   {
     icon: "\uD83D\uDCCA",
     title: "Data & Dashboards",
-    text: "Turning raw data into clean stories with Power BI \u2014 KPIs, trends, and slicers that make numbers feel readable.",
+    text: "Turning raw data into readable stories.",
   },
   {
     icon: "\uD83C\uDFB5",
     title: "Music",
-    text: "A good soundtrack is half the build \u2014 lo-fi, hip-hop instrumentals, and jazz when the code gets quiet.",
+    text: "The right playlist while I code.",
   },
   {
     icon: "\uD83D\uDCDA",
     title: "Reading",
-    text: "Datasheets, research papers, and docs \u2014 plus the occasional book that isn\u2019t about electronics.",
+    text: "Datasheets, docs, and the odd good book.",
   },
   {
     icon: "\uD83D\uDE97",
     title: "Automotive & Repair",
-    text: "Hands-on wrenching with real machines \u2014 bus maintenance during OJT taught me that fixing things with your own hands is strangely satisfying.",
+    text: "Hands-on wrenching \u2014 bus OJT taught me the rest.",
   },
   {
     icon: "\uD83C\uDF93",
     title: "Online Learning",
-    text: "Always in a course or three \u2014 LinkedIn Learning, Cisco, and platform certificates to stay sharp and current.",
+    text: "Always mid-course on something new.",
   },
 ];

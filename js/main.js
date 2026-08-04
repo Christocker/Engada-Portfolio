@@ -44,14 +44,11 @@
 
   const sections = ["home", "projects", "about", "contact"].map((id) => document.getElementById(id));
   const spyTargets = $$(".menu-link, .dock-link");
-  const scrolly = $("#scrolly");
   const wallpaper = $("#wallpaper");
 
   let ticking = false;
   const onScroll = () => {
     const y = window.scrollY;
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    scrolly.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
     wallpaper.style.translate = `0 ${Math.min(y * 0.06, 90)}px`;
 
     const probe = y + window.innerHeight * 0.3;
@@ -336,9 +333,9 @@
         const r = link.getBoundingClientRect();
         const dx = cx - (r.left - rect.left + r.width / 2);
         const d = Math.min(Math.abs(dx), 170);
-        const s = 1 + 0.6 * (1 - d / 170);
+        const s = 1 + 0.32 * (1 - d / 170);
         link.style.setProperty("--s", s.toFixed(3));
-        link.classList.toggle("hot", s > 1.22);
+        link.classList.toggle("hot", s > 1.1);
       });
     };
     dock.addEventListener("pointermove", (e) => {
@@ -355,7 +352,7 @@
 
   /* ---------------- iOS-style tap bounce (delegated) ---------------- */
 
-  const BOUNCE_SEL = ".btn, .sc, .dock-link, .project-entry, .modal-close, .win-close, .interest-card, .edu-card, .award-item, .skill-chip, .menu-link, .contact-socials a";
+  const BOUNCE_SEL = ".btn, .sc, .dock-link, .modal-close, .win-close, .interest-card, .edu-card, .award-item, .skill-chip, .menu-link, .contact-socials a";
   document.addEventListener("click", (e) => {
     const el = e.target.closest(BOUNCE_SEL);
     if (!el) return;
