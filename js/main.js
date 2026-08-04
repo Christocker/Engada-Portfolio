@@ -344,7 +344,7 @@
         const r = link.getBoundingClientRect();
         const dx = cx - (r.left - rect.left + r.width / 2);
         const d = Math.min(Math.abs(dx), 170);
-        const s = 1 + 0.32 * (1 - d / 170);
+        const s = 1 + 0.22 * (1 - d / 170);
         link.style.setProperty("--s", s.toFixed(3));
         link.classList.toggle("hot", s > 1.1);
       });

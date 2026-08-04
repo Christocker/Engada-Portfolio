@@ -415,12 +415,9 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   transition: transform 0.3s var(--spring), box-shadow 0.3s var(--ease);
 }
 .photo:hover .photo-frame { transform: translateY(-3px) rotate(-0.5deg); box-shadow: var(--shadow); }
-.photo-placeholder {
-  aspect-ratio: 1 / 1.08; border-radius: 8px;
-  background: var(--win);
-  border: 1.5px dashed var(--border);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px;
-  color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+.photo-img {
+  width: 100%; aspect-ratio: 1 / 1;
+  border-radius: 8px; object-fit: cover; display: block;
 }
 .photo-cap { margin-top: 10px; text-align: center; font-size: 10.5px; font-weight: 600; color: var(--muted); letter-spacing: 0.08em; }
 
@@ -591,7 +588,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 .dock {
   position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
   z-index: 110;
-  display: flex; align-items: flex-end; gap: 13px;
+  display: flex; align-items: flex-end; gap: 17px;
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);

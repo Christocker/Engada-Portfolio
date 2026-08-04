@@ -153,8 +153,8 @@ const EDUCATION = [
     school: "De La Salle University \u2013 Dasmari\u00f1as",
     years: "2024 \u2013 Present",
     honors: [
-      "First Honors Dean\u2019s Lister \u2014 1st Sem, AY 2024\u20132025",
-      "First Honors Dean\u2019s Lister \u2014 2nd Sem, AY 2024\u20132025",
+      "DLSU-D | Second Honors Dean Lister: 1st Year, 2nd Semester | 2024-2025",
+      "DLSU-D | Second Honors Dean Lister: 1st Year, 1st Semester | 2024-2025",
       "Latest GPA: 3.19",
     ],
     extra: ["IECEP Member", "NROTC Cadet"],
@@ -170,7 +170,7 @@ const CERTIFICATIONS = [
 ];
 
 const AWARDS = [
-  { title: "First Honors Dean\u2019s Lister", meta: "De La Salle University \u2013 Dasmari\u00f1as \u00b7 AY 2024\u20132025, both semesters" },
+  { title: "Second Honors Dean\u2019s Lister", meta: "De La Salle University \u2013 Dasmari\u00f1as \u00b7 AY 2024\u20132025, both semesters" },
   { title: "Robothon Inter-Section Robotics Champion", meta: "Elizabeth Seton School \u2013 South \u00b7 2019" },
   { title: "Financial Aid Scholar", meta: "CEAT \u00b7 USG \u00b7 DOLE SPES \u00b7 DLSU-D" },
 ];
@@ -188,8 +188,8 @@ const INTERESTS = [
   },
   {
     icon: "\uD83C\uDFAE",
-    title: "Narrative Games",
-    text: "Story-driven games and Ren\u2019Py experiments.",
+    title: "Games",
+    text: "Strategy, story-driven titles, and game dev experiments.",
   },
   {
     icon: "\uD83D\uDC85",
@@ -202,23 +202,8 @@ const INTERESTS = [
     text: "Turning raw data into readable stories.",
   },
   {
-    icon: "\uD83C\uDFB5",
-    title: "Music",
-    text: "The right playlist while I code.",
-  },
-  {
-    icon: "\uD83D\uDCDA",
-    title: "Reading",
-    text: "Datasheets, docs, and the odd good book.",
-  },
-  {
     icon: "\uD83D\uDE97",
     title: "Automotive & Repair",
     text: "Hands-on wrenching \u2014 bus OJT taught me the rest.",
-  },
-  {
-    icon: "\uD83C\uDF93",
-    title: "Online Learning",
-    text: "Always mid-course on something new.",
   },
 ];
