@@ -42,7 +42,7 @@
 
   /* ---------------- Scroll: spy, progress, parallax ---------------- */
 
-  const sections = ["home", "projects", "about", "contact"].map((id) => document.getElementById(id));
+  const sections = ["home", "projects", "about", "interests", "contact"].map((id) => document.getElementById(id));
   const spyTargets = $$(".menu-link, .dock-link");
   const wallpaper = $("#wallpaper");
 
@@ -318,7 +318,7 @@
     const win = btn.closest(".window");
     if (!win) return;
 
-    win.classList.toggle("min");
+    win.classList.add("min");
     btn.classList.add("bouncing");
     btn.addEventListener("animationend", () => btn.classList.remove("bouncing"), { once: true });
   });
@@ -360,7 +360,7 @@
         if (Math.abs(s - prevS[i]) < 0.001) return;
         prevS[i] = s;
         link.style.setProperty("--s", s.toFixed(3));
-        const hot = s > 1.1;
+        const hot = Math.abs(dx) < 26;
         if (link.classList.contains("hot") !== hot) link.classList.toggle("hot", hot);
       });
     };

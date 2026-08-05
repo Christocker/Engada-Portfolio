@@ -132,7 +132,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   position: relative;
   padding: 3px 10px; border-radius: 6px;
   color: var(--ink-dim); font-weight: 500;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
 .menu-link::after {
   content: ""; position: absolute; left: 10px; right: 10px; bottom: 1px;
@@ -236,7 +236,8 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 
 /* ---------------- Welcome window ---------------- */
 
-.welcome-body { padding: 56px 48px 44px; }
+.welcome-body { padding: 56px 48px 44px; display: grid; grid-template-columns: 1fr 300px; gap: 44px; align-items: center; }
+.welcome-photo { text-align: center; }
 .kick { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
 .welcome h1 { font-size: clamp(56px, 8vw, 92px); letter-spacing: -0.03em; line-height: 1; margin: 8px 0 0; }
 .welcome h1 em { color: var(--accent); }
@@ -601,6 +602,16 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 .dock:hover { box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22); }
 .dock-link { position: relative; z-index: 0; }
 .dock-link.hot { z-index: 2; }
+.dock-link::before {
+  content: ""; position: absolute;
+  bottom: -8px; left: 50%;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease), transform 0.3s var(--spring);
+}
+.dock-link.active::before { transform: translateX(-50%) scale(1); opacity: 1; }
 .dock-link::after {
   content: attr(data-lbl);
   position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%);
@@ -621,18 +632,11 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
   transform-origin: bottom center;
   transform: scale(var(--s, 1)) translateY(calc((var(--s, 1) - 1) * -9px));
-  transition: transform 0.1s ease-out, box-shadow 0.2s;
+  transition: transform 0.1s ease-out, box-shadow 0.3s var(--ease);
   will-change: transform;
 }
 .dock-link:hover .dico { box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28); }
 .dock-link.active .dico { box-shadow: 0 0 0 2.5px var(--accent), 0 6px 18px rgba(10, 132, 255, 0.4); }
-.dock-link.active::after {
-  content: ""; position: absolute;
-  bottom: -6px; left: 50%; transform: translateX(-50%);
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--accent);
-  opacity: 1; padding: 0;
-}
 .dock-sep { width: 1px; height: 42px; background: rgba(0, 0, 0, 0.12); margin: 0 4px; }
 
 /* ---------------- Modal dialog ---------------- */
@@ -709,7 +713,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   transition-delay: var(--d, 0s);
 }
 .reveal.in { opacity: 1; transform: none; }
-.window.reveal.in { transition-duration: 0.6s; }
+.window.reveal.in { transition-duration: 0.75s; transition-timing-function: var(--spring); }
 
 /* ---------------- Responsive ---------------- */
 
@@ -723,7 +727,8 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .photo-frame { max-width: 260px; }
   .contact-body { grid-template-columns: 1fr; gap: 34px; }
   .menubar-nav { display: none; }
-  .welcome-body { padding: 40px 28px 34px; }
+  .welcome-body { grid-template-columns: 1fr; gap: 34px; padding: 40px 28px 34px; }
+  .welcome-photo .photo-frame { max-width: 260px; margin: 0 auto; }
 }
 
 @media (max-width: 640px) {
