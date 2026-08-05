@@ -506,7 +506,7 @@
 
   /* ---------------- iOS-style tap bounce (delegated) ---------------- */
 
-  const BOUNCE_SEL = ".btn, .sc, .dock-link, .modal-close, .win-close, .interest-card, .edu-card, .award-item, .skill-chip, .menu-link, .contact-socials a";
+  const BOUNCE_SEL = ".btn, .sc, .dock-link, .modal-close, .win-close, .edu-card, .award-item, .skill-chip, .menu-link, .contact-socials a";
   document.addEventListener("click", (e) => {
     const el = e.target.closest(BOUNCE_SEL);
     if (!el) return;
