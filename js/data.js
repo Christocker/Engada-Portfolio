@@ -179,31 +179,31 @@ const INTERESTS = [
   {
     icon: "\uD83D\uDD27",
     title: "Hardware Tinkering",
-    text: "Arduino builds, repairs, and the occasional teardown.",
+    text: "Arduino builds, board repairs, and taking things apart for fun.",
   },
   {
     icon: "\uD83D\uDCBB",
     title: "Programming",
-    text: "Small projects in Python, C++, and the web.",
+    text: "Small apps in Python, C++, and JavaScript \u2014 always a new idea brewing.",
   },
   {
     icon: "\uD83C\uDFAE",
     title: "Games",
-    text: "Strategy, story-driven titles, and game dev experiments.",
+    text: "Strategy and story games, with a growing pile of unfinished prototypes.",
   },
   {
     icon: "\uD83D\uDC85",
     title: "Web & UI Polish",
-    text: "Interfaces that feel fast and finished.",
+    text: "Chasing clean layouts and responsive interactions that just feel right.",
   },
   {
     icon: "\uD83D\uDCCA",
     title: "Data & Dashboards",
-    text: "Turning raw data into readable stories.",
+    text: "Spending too much time arranging charts until they actually make sense.",
   },
   {
     icon: "\uD83D\uDE97",
     title: "Automotive & Repair",
-    text: "Hands-on wrenching \u2014 bus OJT taught me the rest.",
+    text: "Learned to weld and grind during bus OJT; now I love wrenching.",
   },
 ];
