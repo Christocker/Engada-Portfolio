@@ -179,31 +179,36 @@ const INTERESTS = [
   {
     icon: "\uD83D\uDD27",
     title: "Hardware Tinkering",
-    text: "Arduino builds, board repairs, and taking things apart for fun.",
+    text: "I enjoy repairing and troubleshooting electronics, whether it's a phone, laptop, electric motor, or any device that can be taken apart and fixed.",
   },
   {
     icon: "\uD83D\uDCBB",
     title: "Programming",
-    text: "Small apps in Python, C++, and JavaScript \u2014 always a new idea brewing.",
+    text: "Building applications and tools using Python, C++, JavaScript, and modern web technologies.",
   },
   {
     icon: "\uD83C\uDFAE",
     title: "Games",
-    text: "Strategy and story games, with a growing pile of unfinished prototypes.",
+    text: "I mostly play shooters and visual novels.",
   },
   {
-    icon: "\uD83D\uDC85",
+    icon: "\u2728",
     title: "Web & UI Polish",
-    text: "Chasing clean layouts and responsive interactions that just feel right.",
+    text: "Making interfaces clean, consistent, and responsive.",
   },
   {
     icon: "\uD83D\uDCCA",
     title: "Data & Dashboards",
-    text: "Spending too much time arranging charts until they actually make sense.",
+    text: "Working with data and analytics, building dashboards that present information clearly.",
   },
   {
     icon: "\uD83D\uDE97",
     title: "Automotive & Repair",
-    text: "Learned to weld and grind during bus OJT; now I love wrenching.",
+    text: "Vehicle maintenance and repair work \u2014 I like learning how automotive systems actually function.",
+  },
+  {
+    icon: "\uD83C\uDF10",
+    title: "Web Development",
+    text: "Building responsive websites, experimenting with modern frameworks, and continuously improving frontend and backend development skills.",
   },
 ];

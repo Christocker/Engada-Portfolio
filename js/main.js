@@ -135,7 +135,7 @@
 
   $("#interestsGrid").innerHTML = INTERESTS.map(
     (it, i) => `
-    <article class="interest-card reveal" data-idx="${String(i + 1).padStart(2, "0")}" style="--d:${(i % 3) * 0.06}s">
+    <article class="interest-card reveal" data-idx="${String(i + 1).padStart(2, "0")}" style="--d:${Math.min(i * 0.07, 0.35)}s">
       <div class="interest-icon">${it.icon}</div>
       <h4>${it.title}</h4>
       <p>${it.text}</p>
@@ -197,6 +197,25 @@
     });
   };
 
+  let gridTimer = null;
+  const renderGrid = (html) => {
+    const cards = $$(".project-entry", grid);
+    if (cards.length === 0) {
+      grid.innerHTML = html;
+      animateIn();
+      return;
+    }
+    cards.forEach((c, i) => {
+      c.classList.add("leaving");
+      c.style.setProperty("--d", `${i * 0.03}s`);
+    });
+    clearTimeout(gridTimer);
+    gridTimer = setTimeout(() => {
+      grid.innerHTML = html;
+      animateIn();
+    }, 260);
+  };
+
   const applyFilters = () => {
     const q = searchInput.value.trim().toLowerCase();
     const cat = selCat.value;
@@ -212,7 +231,7 @@
     else if (sort === "oldest") list.sort((a, b) => a.year - b.year);
     else list.sort((a, b) => a.title.localeCompare(b.title));
 
-    grid.innerHTML = list.map(entryHTML).join("");
+    renderGrid(list.map(entryHTML).join(""));
     countEl.textContent = list.length === 1 ? "1 entry found" : `${list.length} entries found`;
     emptyState.hidden = list.length > 0;
 
@@ -239,6 +258,91 @@
     selSort.value = "newest";
     applyFilters();
   });
+
+  /* ---------------- Custom dropdowns (animated) ---------------- */
+
+  const initDropdown = (ddEl) => {
+    const select = ddEl.querySelector(".dd-native");
+    const btn = ddEl.querySelector(".dd-btn");
+    const val = ddEl.querySelector(".dd-val");
+    const list = ddEl.querySelector(".dd-list");
+    let open = false;
+    let kbd = select.selectedIndex;
+    let closeTimer = null;
+
+    const paint = () => {
+      val.textContent = select.options[select.selectedIndex].textContent;
+      [...list.children].forEach((li, i) => {
+        li.classList.toggle("sel-opt", i === select.selectedIndex);
+        li.classList.toggle("kbd-hi", i === kbd);
+        li.setAttribute("aria-selected", String(i === kbd));
+      });
+    };
+
+    const buildList = () => {
+      list.innerHTML = "";
+      [...select.options].forEach((opt, i) => {
+        const li = document.createElement("li");
+        li.className = "dd-opt";
+        li.setAttribute("role", "option");
+        li.id = `${select.id}-opt-${i}`;
+        li.textContent = opt.textContent;
+        li.addEventListener("pointerenter", () => { kbd = i; paint(); });
+        li.addEventListener("click", () => choose(i));
+        list.appendChild(li);
+      });
+      paint();
+    };
+
+    const choose = (i) => {
+      select.selectedIndex = i;
+      paint();
+      close();
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+
+    const openList = () => {
+      if (open) return;
+      open = true;
+      clearTimeout(closeTimer);
+      list.hidden = false;
+      void list.offsetWidth;
+      list.classList.add("open");
+      ddEl.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+      btn.setAttribute("aria-activedescendant", `${select.id}-opt-${kbd}`);
+    };
+
+    const close = () => {
+      if (!open) return;
+      open = false;
+      list.classList.remove("open");
+      ddEl.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+      btn.removeAttribute("aria-activedescendant");
+      closeTimer = setTimeout(() => { list.hidden = true; }, 170);
+    };
+
+    btn.addEventListener("click", () => (open ? close() : openList()));
+    btn.addEventListener("keydown", (e) => {
+      const opts = list.children.length;
+      if (!open) {
+        if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          kbd = select.selectedIndex;
+          openList();
+        }
+        return;
+      }
+      if (e.key === "ArrowDown") { e.preventDefault(); kbd = (kbd + 1) % opts; paint(); btn.setAttribute("aria-activedescendant", `${select.id}-opt-${kbd}`); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); kbd = (kbd - 1 + opts) % opts; paint(); btn.setAttribute("aria-activedescendant", `${select.id}-opt-${kbd}`); }
+      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(kbd); }
+      else if (e.key === "Escape") { e.preventDefault(); close(); btn.focus(); }
+    });
+    document.addEventListener("pointerdown", (e) => { if (!ddEl.contains(e.target)) close(); });
+    buildList();
+  };
+  $$(".dd").forEach(initDropdown);
 
   applyFilters();
 
@@ -309,7 +413,7 @@
       modal.hidden = true;
       unlockScroll();
       if (lastFocused) lastFocused.focus();
-    }, 240);
+    }, 300);
   };
 
   $$("[data-modal-close]", modal).forEach((el) => el.addEventListener("click", closeModal));

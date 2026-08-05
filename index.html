@@ -96,18 +96,32 @@
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
               <input type="text" id="filterSearch" placeholder="Search projects..." aria-label="Search projects" />
             </div>
-            <label class="sel">
+            <div class="sel dd" id="ddCat">
               <span>Entry type</span>
-              <select id="filterCat"><option value="">All</option></select>
-            </label>
-            <label class="sel">
+              <div class="dd-wrap">
+                <select id="filterCat" class="dd-native" tabindex="-1" aria-hidden="true"><option value="">All</option></select>
+                <button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="dd-val">All</span>
+                  <svg class="dd-chev" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+                </button>
+                <ul class="dd-list" role="listbox" hidden></ul>
+              </div>
+            </div>
+            <div class="sel dd" id="ddSort">
               <span>Sort</span>
-              <select id="filterSort">
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-                <option value="az">A &rarr; Z</option>
-              </select>
-            </label>
+              <div class="dd-wrap">
+                <select id="filterSort" class="dd-native" tabindex="-1" aria-hidden="true">
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                  <option value="az">A &rarr; Z</option>
+                </select>
+                <button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="dd-val">Newest</span>
+                  <svg class="dd-chev" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+                </button>
+                <ul class="dd-list" role="listbox" hidden></ul>
+              </div>
+            </div>
           </div>
 
           <p class="count" id="projectsCount" aria-live="polite"></p>
@@ -135,29 +149,19 @@
               and a builder who jumps between circuits, code, and dashboards.
             </p>
             <p>
-              I&rsquo;m currently finishing my Electronics Engineering degree at
-              De La Salle University &ndash; Dasmari&ntilde;as. Along the way I started
-              OneByte, where I sold digital products and handled technical support
-              for customers. I also co-founded OneByte Steel Cabinets with my family
-              &mdash; I deal with suppliers, inventory, logistics, and customer relations,
-              and I keep the business website running.
+              I&rsquo;m finishing my Electronics Engineering degree at De La Salle
+              University &ndash; Dasmari&ntilde;as. I founded OneByte, a digital products
+              business, and co-founded OneByte Steel Cabinets, where I handle
+              suppliers, inventory, logistics, customer relations, and the company
+              website.
             </p>
             <p>
-              The work I enjoy is a mix of hardware and software. I&rsquo;ve built
-              Arduino prototypes, including a vehicle detection system for blind
-              corners, and I spent a summer in the ADI Junior Aspirant program at
-              Analog Devices verifying chip functionality alongside the engineers
-              there. On the mechanical side, automotive OJT gave me real hours with
-              bus maintenance, welding, grinding, drilling, and repairs.
-            </p>
-            <p>
-              At my desk, I build websites with React, play with data until it turns
-              into dashboards, and occasionally attempt game development. Outside
-              school, that&rsquo;s mostly strategy and story-driven games &mdash; with a
-              folder of half-finished prototypes to prove it. I like knowing how
-              things work, whether it&rsquo;s electronics, software, or machines. This
-              site is just me introducing myself. Nothing polished-up, no claims I
-              can&rsquo;t back up.
+              My projects sit somewhere between hardware and software: Arduino
+              prototypes like a blind-corner vehicle detection system, chip
+              verification work at Analog Devices, and bus maintenance, welding,
+              and repairs from automotive OJT. Outside school, I build websites
+              with React, make dashboards, and play more games than I probably
+              should.
             </p>
           </div>
           <div class="photo">
@@ -285,7 +289,7 @@
       </section>
 
       <footer class="foot reveal">
-        <p>&copy; <span id="year"></span> Chris Bern J. Engada &middot; Built with curiosity.</p>
+        <p>&copy; <span id="year"></span> Chris Bern J. Engada &middot; Made by hand.</p>
       </footer>
     </main>
   </div>
