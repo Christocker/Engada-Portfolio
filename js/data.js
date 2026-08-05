@@ -117,32 +117,51 @@ const EXPERIENCE = [
   {
     years: "2023 \u2013 Present",
     tag: "Founder",
-    title: "Founder \u2014 OneByte (Digital Products)",
-    text: "Founded and managed an online digital products business. Marketed and sold digital applications while managing customer inquiries and transactions, with technical support and after-sales assistance.",
+    title: "Founder \u2014 OneByte (Digital Solutions & Web Services)",
+    points: [
+      "Founded and operated a digital solutions business focused on web development and software-related services.",
+      "Design, develop, and deploy responsive websites based on client requirements.",
+      "Coordinate projects from consultation and planning through deployment and post-launch support.",
+    ],
   },
   {
     years: "2024 \u2013 Present",
     tag: "Co-Founder",
     title: "Co-Founder \u2014 OneByte Steel Cabinets",
-    text: "Co-founded a steel-cabinet dealership: sourced suppliers and coordinated procurement, oversaw inventory, logistics, and customer relations, and developed the company website and digital marketing initiatives.",
+    points: [
+      "Sourced suppliers and coordinated product procurement to meet customer demand.",
+      "Oversaw inventory, logistics, and customer relations.",
+      "Developed the company website and managed digital marketing initiatives.",
+    ],
   },
   {
     years: "2026",
     tag: "DLSU-D",
     title: "Student Assistant \u2014 GMD Laboratory",
-    text: "Managed laboratory inventory and supported daily operations at De La Salle University \u2013 Dasmari\u00f1as. Monitored equipment, tools, and supplies, and assisted faculty and staff with lab maintenance.",
+    points: [
+      "Managed laboratory inventory and supported daily laboratory operations.",
+      "Monitored equipment, tools, and supplies to ensure availability and proper organization.",
+      "Assisted faculty and staff in maintaining laboratories and materials.",
+    ],
   },
   {
     years: "2025",
     tag: "OJT",
     title: "On-the-Job Trainee \u2014 Consolidated Viking Tourist Transport Inc.",
-    text: "Hands-on bus maintenance, mechanical repairs, welding, grinding, and drilling. Assisted technicians with vehicle inspection, preventive maintenance, and repair, applying engineering principles and workplace safety practices.",
+    points: [
+      "Performed hands-on bus maintenance, mechanical repairs, welding, grinding, and drilling.",
+      "Assisted technicians in vehicle inspection, preventive maintenance, and repair activities.",
+      "Applied engineering principles and workplace safety practices in an automotive maintenance environment.",
+    ],
   },
   {
     years: "2023",
     tag: "Analog Devices",
     title: "ADI Junior Aspirant Trainee",
-    text: "Collaborated with engineers to verify chip functionality, system configurations, and performance. Awarded the ADI Junior Aspirant Certificate of Completion and Best ADIary Presentation Certificate.",
+    points: [
+      "Collaborated with engineers to verify chip functionality, system configurations, and performance.",
+      "Awarded the ADI Junior Aspirant Certificate of Completion and Best ADIary Presentation Certificate.",
+    ],
   },
 ];
 

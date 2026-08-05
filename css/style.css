@@ -496,7 +496,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 
 /* Experience */
 
-.work-entry { padding: 0 0 20px 22px; position: relative; }
+.work-entry { padding: 0 0 22px 22px; position: relative; }
 .work-entry:last-child { padding-bottom: 0; }
 .work-entry::before {
   content: ""; position: absolute; left: 4px; top: 7px;
@@ -517,9 +517,15 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   color: var(--muted); background: var(--bar); border: 1px solid var(--border);
   padding: 2px 9px; border-radius: 999px;
 }
-.work-body h4 { font-size: 15px; margin: 6px 0 4px; transition: color 0.2s; }
+.work-body h4 { font-size: 15px; margin: 6px 0 8px; transition: color 0.2s; }
 .work-entry:hover .work-body h4 { color: var(--accent); }
-.work-body p { color: var(--ink-dim); font-size: 13px; }
+.work-bullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.work-bullets li { position: relative; padding-left: 16px; color: var(--ink-dim); font-size: 13px; }
+.work-bullets li::before {
+  content: ""; position: absolute; left: 0; top: 8px;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+}
 
 /* Education */
 
@@ -587,9 +593,10 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   cursor: default;
   transition: transform 0.2s var(--win-spring), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-.interests-grid .interest-card:hover { transform: scale(1.02); background: #fbfbfd; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05); }
+.interests-grid .interest-card:hover { transform: scale(1.02) translateY(-4px); background: #fbfbfd; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.11), 0 2px 6px rgba(0, 0, 0, 0.05); }
 .interests-grid .reveal { transition-duration: 0.5s, 0.6s; transition-timing-function: var(--ease), var(--win-spring); }
-.interest-icon { font-size: 24px; margin-bottom: 8px; display: inline-block; }
+.interest-icon { font-size: 24px; margin-bottom: 8px; display: inline-block; transition: transform 0.2s var(--win-spring); }
+.interests-grid .interest-card:hover .interest-icon { transform: scale(1.08) translateY(-3px) rotate(2.5deg); }
 .interest-card h4 { font-size: 15px; margin-bottom: 3px; }
 .interest-card p { color: var(--ink-dim); font-size: 13px; }
 

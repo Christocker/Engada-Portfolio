@@ -100,7 +100,7 @@
       </div>
       <div class="work-body">
         <h4>${j.title}</h4>
-        <p>${j.text}</p>
+        <ul class="work-bullets">${j.points.map((p) => `<li>${p}</li>`).join("")}</ul>
       </div>
     </div>`
   ).join("");
