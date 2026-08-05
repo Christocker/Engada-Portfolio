@@ -25,6 +25,14 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --spring: cubic-bezier(0.25, 0.75, 0.35, 1);
   --press: cubic-bezier(0.32, 0.72, 0.32, 1);
+  --win-in-dur: 0.42s;
+  --win-out-dur: 0.22s;
+  --win-in-y: 12px;
+  --win-in-scale: 0.93;
+  --win-out-y: 8px;
+  --win-out-scale: 0.96;
+  --modal-shadow: 0 40px 90px rgba(0, 0, 0, 0.35);
+  --modal-shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.22);
   --menubar-h: 30px;
   --dock-h: 66px;
 }
@@ -189,6 +197,16 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 }
 .window.min .win-body { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; }
 .window.min .titlebar { border-bottom-color: transparent; }
+@keyframes winOut {
+  from { opacity: 1; translate: 0 0; }
+  to { opacity: 0.35; translate: 0 14px; }
+}
+@keyframes winIn {
+  from { opacity: 0.35; translate: 0 14px; }
+  to { opacity: 1; translate: 0 0; }
+}
+.window.anim-min { animation: winOut 0.32s var(--ease) both; }
+.window.anim-open { animation: winIn 0.42s var(--spring) both; }
 .win-row .window.max { grid-column: 1 / -1; }
 
 .titlebar {
@@ -641,10 +659,19 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 
 /* ---------------- Modal dialog ---------------- */
 
-.modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; }
+.modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; pointer-events: none; }
 .modal[hidden] { display: none; }
+.modal.open { pointer-events: auto; }
 
-.modal-backdrop { position: absolute; inset: 0; background: rgba(20, 24, 30, 0.4); backdrop-filter: blur(4px); animation: fadeIn 0.2s ease; transition: opacity 0.2s; }
+.modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(20, 24, 30, 0.4);
+  backdrop-filter: blur(0);
+  opacity: 0;
+  transition: opacity var(--win-in-dur) var(--ease), backdrop-filter 0.3s var(--ease);
+}
+.modal.open .modal-backdrop { opacity: 1; backdrop-filter: blur(4px); }
+.modal:not(.open) .modal-backdrop { transition-duration: 0.18s, 0.18s; }
 
 .modal-win {
   position: relative; z-index: 1;
@@ -653,14 +680,19 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   background: var(--win);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.35);
-  animation: modalIn 0.4s var(--spring);
-  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+  box-shadow: var(--modal-shadow-soft);
+  opacity: 0;
+  transform: translateY(var(--win-in-y)) scale(var(--win-in-scale));
+  transition:
+    opacity var(--win-in-dur) var(--ease),
+    transform var(--win-in-dur) var(--spring),
+    box-shadow var(--win-in-dur) var(--ease);
 }
-.modal.closing .modal-win { opacity: 0; transform: scale(0.92) translateY(14px); }
-.modal.closing .modal-backdrop { opacity: 0; }
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+.modal.open .modal-win { opacity: 1; transform: none; box-shadow: var(--modal-shadow); }
+.modal:not(.open) .modal-win {
+  opacity: 0;
+  transform: translateY(var(--win-out-y)) scale(var(--win-out-scale));
+  transition-duration: var(--win-out-dur), var(--win-out-dur), var(--win-out-dur);
 }
 
 .modal-close {
@@ -714,6 +746,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 }
 .reveal.in { opacity: 1; transform: none; }
 .window.reveal.in { transition-duration: 0.75s; transition-timing-function: var(--spring); }
+.window.reveal.min, .window.min { translate: 0 14px; opacity: 0.35; }
 
 /* ---------------- Responsive ---------------- */
 

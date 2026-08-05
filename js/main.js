@@ -268,6 +268,9 @@
     document.body.style.paddingRight = "";
   };
 
+  let modalOpen = false;
+  let closeTimer = null;
+
   const openModal = (id) => {
     const p = PROJECTS.find((x) => x.id === id);
     if (!p) return;
@@ -286,26 +289,32 @@
       .map((l, i) => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer" class="btn ${i === 0 ? "primary" : "outline"}">${esc(l.label)} &nearr;</a>`)
       .join("");
 
-    modal.classList.remove("closing");
+    if (modalOpen) return;
+
+    modalOpen = true;
+    clearTimeout(closeTimer);
     modal.hidden = false;
+    void modal.offsetWidth;
+    modal.classList.add("open");
     lockScroll();
     $(".modal-close", modal).focus();
   };
 
   const closeModal = () => {
-    if (modal.hidden) return;
-    modal.classList.add("closing");
-    setTimeout(() => {
+    if (!modalOpen) return;
+    modalOpen = false;
+    modal.classList.remove("open");
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
       modal.hidden = true;
-      modal.classList.remove("closing");
       unlockScroll();
       if (lastFocused) lastFocused.focus();
-    }, 200);
+    }, 240);
   };
 
   $$("[data-modal-close]", modal).forEach((el) => el.addEventListener("click", closeModal));
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.hidden) closeModal();
+    if (e.key === "Escape" && modalOpen) closeModal();
   });
 
   /* ---------------- Window close control ---------------- */
@@ -321,7 +330,9 @@
     const win = btn.closest(".window");
     if (!win) return;
 
-    win.classList.add("min");
+    win.classList.remove("anim-open");
+    win.classList.add("min", "anim-min");
+    win.addEventListener("animationend", () => win.classList.remove("anim-min"), { once: true });
     btn.classList.add("bouncing");
     btn.addEventListener("animationend", () => btn.classList.remove("bouncing"), { once: true });
   });
@@ -330,7 +341,11 @@
     tb.addEventListener("click", (e) => {
       if (e.target.closest(".win-close")) return;
       const win = tb.closest(".window");
-      if (win.classList.contains("min")) win.classList.remove("min");
+      if (win.classList.contains("min")) {
+        win.classList.remove("min", "anim-min");
+        win.classList.add("anim-open");
+        win.addEventListener("animationend", () => win.classList.remove("anim-open"), { once: true });
+      }
       focusWin(win);
     });
   });
