@@ -93,11 +93,11 @@ const SKILL_GROUPS = [
   },
   {
     name: "Programming Languages",
-    skills: ["Python", "JavaScript", "C++", "Java", "HTML/CSS"],
+    skills: ["Python", "JavaScript", "C++", "Java", "HTML/CSS", "SQL"],
   },
   {
     name: "Frontend & Backend",
-    skills: ["React", "Tailwind CSS", "Node.js", "TypeScript", "Vercel"],
+    skills: ["React", "Tailwind CSS", "Node.js", "TypeScript", "Vercel", "Supabase"],
   },
   {
     name: "Game Development",
