@@ -109,7 +109,7 @@ const SKILL_GROUPS = [
   },
   {
     name: "Tools",
-    skills: ["Git", "GitHub", "Figma", "Power BI"],
+    skills: ["Git", "GitHub", "npm", "Figma", "Power BI"],
   },
 ];
 
