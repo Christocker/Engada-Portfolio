@@ -80,7 +80,9 @@ const PROJECTS = [
       "Focused on road-safety impact at blind corners",
     ],
     links: [
+      { label: "Live Site", href: "https://udspot.vercel.app" },
       { label: "View Research Paper", href: "https://drive.google.com/file/d/18Sc4w7_er7RtVi6QERsHs5Fs82KrSzeC/view?usp=sharing" },
+      { label: "View Source", href: "https://github.com/Christocker/UDSpot" },
     ],
     tags: ["Arduino", "C++", "Ultrasonic Sensors", "AutoCAD"],
   },
