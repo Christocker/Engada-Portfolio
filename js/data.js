@@ -18,6 +18,29 @@ const SITE = {
 
 const PROJECTS = [
   {
+    id: "help-is-on-the-way",
+    title: "Help Is on the Way",
+    subtitle: "Free Mental Healthcare Access Platform",
+    year: 2026,
+    category: "Completed Builds",
+    language: "TypeScript",
+    tool: "Next.js / Supabase",
+    desc: "A platform that connects people with professional mental health services for free, coordinating with partner providers so users don\u2019t have to pay.",
+    key: "Built the full mental-healthcare platform as the developer: secure account creation with email-confirmation verification, login, a user database with Row Level Security, an appointment booking workflow, and an admin dashboard to manage appointments, clients, categories, and availability. Deployed to Vercel with auth, protected routes, and role-based access.",
+    highlights: [
+      "Account creation, login, and email-confirmation verification",
+      "Supabase (PostgreSQL) with Row Level Security and role-based access",
+      "Guided 4-step appointment booking flow with no payment step",
+      "Admin dashboard: appointments, clients, categories, availability",
+      "Mobile-first responsive design deployed on Vercel",
+    ],
+    links: [
+      { label: "Live Site", href: "https://help-is-on-the-way.vercel.app" },
+      { label: "View Source", href: "https://github.com/Christocker/Help-Is-on-the-Way" },
+    ],
+    tags: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS", "Vercel"],
+  },
+  {
     id: "onebyte",
     title: "OneByte Steel Cabinets",
     subtitle: "Business Website",
