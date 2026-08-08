@@ -84,29 +84,6 @@ const PROJECTS = [
     ],
     tags: ["Arduino", "C++", "Ultrasonic Sensors", "AutoCAD"],
   },
-  {
-    id: "powerbi",
-    title: "Power BI Project 1",
-    subtitle: "Sales Analytics Dashboard",
-    year: 2025,
-    category: "Project",
-    language: "DAX / Power Query",
-    tool: "Power BI",
-    badge: "Under Construction",
-    desc: "A sales analytics dashboard in Power BI from sample sales data \u2014 KPIs, trends, and slicer-driven visuals. Still being built out.",
-    note: "This entry is under construction \u2014 the report layer, final KPI visuals, and slicers are still being built.",
-    key: "Connected and transformed a sample sales dataset (Excel) in Power Query, modeled it, and am building the interactive report layer. The final dashboard \u2014 KPI tiles, trend charts, and slicer-driven pages \u2014 is still under construction as I finish and polish the measures and visuals.",
-    highlights: [
-      "Data import and cleaning with Power Query",
-      "Star-schema model ready for DAX measures",
-      "KPI and trend visuals \u2014 in progress",
-      "Slicers for region, date, and product filtering",
-    ],
-    links: [
-      { label: "Open Project Folder", href: "https://github.com/Christocker" },
-    ],
-    tags: ["Power BI", "DAX", "Power Query", "Excel", "In Progress"],
-  },
 ];
 
 const SKILL_GROUPS = [
