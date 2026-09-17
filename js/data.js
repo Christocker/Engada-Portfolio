@@ -123,13 +123,12 @@ const PROJECTS = [
     language: "Python",
     tool: "Flask / Modbus TCP",
     desc: "Alternative monitoring software for a Solis hybrid solar inverter, reading live data over Modbus TCP and presenting it through a local dashboard and a hosted web app.",
-    key: "Built a four-layer architecture \u2014 Modbus acquisition, state-aware normalization, a Flask JSON API, and a responsive GUI \u2014 backed by a self-healing poller that rediscovers the inverter if its DHCP address changes. Added a SQLite history logger plus a Supabase cloud sync that feeds a Vercel-hosted dashboard with downsampled full-history charts. Values are never fabricated: unverified registers render as \u201c--\u201d.",
+    key: "Built a four-layer architecture \u2014 Modbus acquisition, state-aware normalization, a Flask JSON API, and a responsive GUI \u2014 backed by a self-healing poller that rediscovers the inverter if its DHCP address changes. Added a SQLite history logger plus a Supabase cloud sync that feeds a Vercel-hosted dashboard with downsampled full-history charts.",
     highlights: [
       "Live solar, battery, grid, and load monitoring over Modbus TCP",
       "Self-healing connection that rediscovers the inverter after DHCP changes",
       "SQLite history logger plus cloud sync to Supabase",
       "Vercel-hosted dashboard with second/minute/hour/day history ranges",
-      "Honest data handling \u2014 unverified registers render as \u201c--\u201d, never faked",
     ],
     links: [
       { label: "Live Site", href: "https://solis-monitor.vercel.app/" },
