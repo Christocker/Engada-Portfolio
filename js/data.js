@@ -51,7 +51,7 @@ const PROJECTS = [
     language: "TypeScript",
     tool: "React / Next.js",
     desc: "A responsive storefront for the steel-cabinet dealership \u2014 product catalog, gallery with lightbox, FAQ, how-to-order flow, and embedded store directions.",
-    key: "Built the full company site for OneByte Steel Cabinets: hero, filterable product grid, gallery with lightbox, FAQ, how-to-order flow, and an embedded storefront with directions. Deployed to Vercel with SEO metadata, sitemap, and robots.",
+    key: "Built the OneByte Steel Cabinets website end to end \u2014 hero, filterable product catalog, expandable gallery, FAQ, and a how-to-order flow with an embedded store map. Also built a password-protected admin dashboard for managing products and inventory in Supabase, secured with signed HttpOnly sessions. Deployed to Vercel with SEO metadata, a sitemap, and robots.txt.",
     highlights: [
       "Next.js + Tailwind CSS, deployed on Vercel",
       "Product catalog, gallery lightbox, FAQ, and order-flow sections",
