@@ -45,7 +45,7 @@
 
   /* ---------------- Scroll: spy, progress, parallax ---------------- */
 
-  const sections = ["home", "projects", "about", "interests", "contact"].map((id) => document.getElementById(id));
+  const sections = ["home", "about", "projects", "interests", "contact"].map((id) => document.getElementById(id));
   const spyTargets = $$(".menu-link, .dock-link");
   const wallpaper = $("#wallpaper");
 
