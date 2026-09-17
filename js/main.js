@@ -162,6 +162,38 @@
   });
 
   const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const hostOf = (u) => { try { return new URL(u).host.replace(/^www\./, ""); } catch (_) { return u; } };
+
+  const makeFrame = (url, title) => {
+    const frame = document.createElement("iframe");
+    frame.className = "preview-frame";
+    frame.loading = "lazy";
+    frame.referrerPolicy = "no-referrer";
+    frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms");
+    frame.setAttribute("title", title);
+    frame.tabIndex = -1;
+    frame.setAttribute("aria-hidden", "true");
+    if (url) frame.src = url;
+    return frame;
+  };
+
+  /* Inline live previews on each row — the iframe is only created once the row
+     scrolls near the viewport, so the list does not load every site at once. */
+  const cardPreviewObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        const link = en.target;
+        const stage = link.querySelector(".ep-stage");
+        if (stage && !stage.firstChild) {
+          stage.appendChild(makeFrame(link.dataset.preview, `${link.dataset.title || "Project"} live preview`));
+        }
+        cardPreviewObserver.unobserve(link);
+      });
+    },
+    { rootMargin: "300px 0px" }
+  );
+  const mountCardPreviews = () => $$(".entry-preview", grid).forEach((el) => cardPreviewObserver.observe(el));
 
   const entryHTML = (p, i) => `
     <article class="project-entry reveal" data-id="${p.id}" tabindex="0" role="button" aria-label="Open ${esc(p.title)} project">
@@ -182,9 +214,22 @@
           ${p.links.map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} &nearr;</a>`).join("")}
         </div>
       </div>
-      <div class="entry-meta">
-        <span class="project-year">${p.year}</span>
-        <span class="entry-arrow" aria-hidden="true">&rarr;</span>
+      <div class="entry-side">
+        <div class="entry-meta">
+          <span class="project-year">${p.year}</span>
+          <span class="entry-arrow" aria-hidden="true">&rarr;</span>
+        </div>
+        ${p.preview ? `
+        <a class="entry-preview" href="${esc(p.preview)}" target="_blank" rel="noopener noreferrer"
+           data-preview="${esc(p.preview)}" data-title="${esc(p.title)}"
+           aria-label="Open ${esc(p.title)} live site in a new tab">
+          <span class="ep-bar" aria-hidden="true">
+            <span class="ep-dots"><i></i><i></i><i></i></span>
+            <span class="ep-host">${esc(hostOf(p.preview))}</span>
+            <span class="ep-go">&nearr;</span>
+          </span>
+          <span class="ep-stage"></span>
+        </a>` : ""}
       </div>
     </article>`;
 
@@ -203,6 +248,7 @@
     if (cards.length === 0) {
       grid.innerHTML = html;
       animateIn();
+      mountCardPreviews();
       return;
     }
     cards.forEach((c, i) => {
@@ -213,6 +259,7 @@
     gridTimer = setTimeout(() => {
       grid.innerHTML = html;
       animateIn();
+      mountCardPreviews();
     }, 260);
   };
 
@@ -383,9 +430,7 @@
       return;
     }
 
-    let host = p.preview;
-    try { host = new URL(p.preview).host.replace(/^www\./, ""); } catch (_) {}
-    previewUrl.textContent = host;
+    previewUrl.textContent = hostOf(p.preview);
     previewOpen.href = p.preview;
 
     previewBox.hidden = false;
@@ -401,15 +446,7 @@
       return;
     }
 
-    const frame = document.createElement("iframe");
-    frame.className = "preview-frame";
-    frame.src = p.preview;
-    frame.loading = "lazy";
-    frame.referrerPolicy = "no-referrer";
-    frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms");
-    frame.setAttribute("title", `${p.title} live preview`);
-    frame.tabIndex = -1;
-    frame.setAttribute("aria-hidden", "true");
+    const frame = makeFrame(p.preview, `${p.title} live preview`);
 
     const portal = document.createElement("a");
     portal.className = "preview-portal";

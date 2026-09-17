@@ -387,7 +387,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   transition-delay: var(--d, 0s);
 }
 .project-entry {
-  display: grid; grid-template-columns: 54px 1fr auto; gap: 16px;
+  display: grid; grid-template-columns: 54px minmax(0, 1fr) 250px; gap: 16px;
   align-items: center;
   padding: 18px 14px;
   border-bottom: 1px solid var(--border-soft);
@@ -444,10 +444,53 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 .project-links a.ghost { color: var(--ink-dim); }
 .project-links a.ghost:hover { color: var(--ink); }
 
-.entry-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.entry-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.entry-meta { display: flex; flex-direction: row; align-items: center; gap: 8px; }
 .project-year { font-size: 12px; font-weight: 600; color: var(--muted); }
 .entry-arrow { color: var(--accent); font-size: 17px; opacity: 0; transform: translateX(-5px); transition: opacity 0.2s, transform 0.22s var(--spring); }
 .project-entry:hover .entry-arrow { opacity: 1; transform: none; }
+
+/* Inline live preview thumbnail on each row (portal to the live site) */
+.entry-preview {
+  position: relative;
+  display: block;
+  width: 250px;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--bar);
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--spring);
+}
+.entry-preview:hover { border-color: rgba(10, 132, 255, 0.5); box-shadow: var(--shadow); transform: translateY(-2px); }
+.entry-preview:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.ep-bar {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+  height: 20px; display: flex; align-items: center; gap: 6px; padding: 0 8px;
+  background: var(--bar); border-bottom: 1px solid var(--border-soft);
+}
+.ep-dots { display: inline-flex; gap: 3px; flex: none; }
+.ep-dots i { width: 5px; height: 5px; border-radius: 50%; box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15); }
+.ep-dots i:nth-child(1) { background: var(--red); }
+.ep-dots i:nth-child(2) { background: var(--yellow); }
+.ep-dots i:nth-child(3) { background: var(--green); }
+.ep-host { flex: 1; min-width: 0; font-size: 8.5px; font-weight: 500; color: var(--muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ep-go { flex: none; font-size: 9px; color: var(--accent); }
+.ep-stage { position: absolute; inset: 20px 0 0 0; background: #fff; overflow: hidden; }
+
+.entry-preview::after {
+  content: "Open live site \2197";
+  position: absolute; left: 0; right: 0; top: 20px; bottom: 0; z-index: 4;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; color: #fff;
+  background: rgba(20, 24, 30, 0.4);
+  opacity: 0; transition: opacity 0.18s var(--ease);
+}
+.entry-preview:hover::after,
+.entry-preview:focus-visible::after { opacity: 1; }
 
 .empty { text-align: center; padding: 44px 16px; color: var(--ink-dim); }
 .empty p { margin-bottom: 14px; }
@@ -917,6 +960,8 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .menubar-nav { display: none; }
   .welcome-body { grid-template-columns: 1fr; gap: 34px; padding: 40px 28px 34px; }
   .welcome-photo .photo-frame { max-width: 260px; margin: 0 auto; }
+  .project-entry { grid-template-columns: 46px minmax(0, 1fr) 200px; }
+  .entry-preview { width: 200px; }
 }
 
 @media (max-width: 640px) {
@@ -936,6 +981,11 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .contact-socials a { width: 100%; }
   .preview-bar { gap: 8px; padding: 0 10px; }
   .preview-url { padding: 4px 10px; }
+  .project-entry { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .entry-num { display: none; }
+  .entry-side { align-items: stretch; }
+  .entry-meta { justify-content: space-between; }
+  .entry-preview { width: 100%; max-width: 460px; }
 }
 
 @media (hover: none) {
