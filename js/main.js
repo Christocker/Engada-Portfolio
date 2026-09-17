@@ -177,6 +177,19 @@
     return frame;
   };
 
+  /* The iframe renders at a fixed desktop size; scale it down to fit its stage
+     so the whole page shows in the thumbnail instead of a zoomed-in crop. */
+  const PREVIEW_W = 1200;
+  const fitPreview = (stage) => {
+    const frame = stage.querySelector(".preview-frame");
+    if (!frame) return;
+    const scale = stage.clientWidth / PREVIEW_W;
+    if (scale > 0) frame.style.transform = `scale(${scale})`;
+  };
+  const previewResizeObserver = new ResizeObserver((entries) => {
+    entries.forEach((en) => fitPreview(en.target));
+  });
+
   /* Inline live previews on each row — the iframe is only created once the row
      scrolls near the viewport, so the list does not load every site at once. */
   const cardPreviewObserver = new IntersectionObserver(
@@ -187,6 +200,8 @@
         const stage = link.querySelector(".ep-stage");
         if (stage && !stage.firstChild) {
           stage.appendChild(makeFrame(link.dataset.preview, `${link.dataset.title || "Project"} live preview`));
+          fitPreview(stage);
+          previewResizeObserver.observe(stage);
         }
         cardPreviewObserver.unobserve(link);
       });
@@ -457,6 +472,8 @@
 
     previewStage.appendChild(frame);
     previewStage.appendChild(portal);
+    fitPreview(previewStage);
+    previewResizeObserver.observe(previewStage);
   };
 
   let modalOpen = false;
@@ -489,6 +506,7 @@
     void modal.offsetWidth;
     modal.classList.add("open");
     lockScroll();
+    requestAnimationFrame(() => fitPreview(previewStage));
     $(".modal-close", modal).focus();
   };
 

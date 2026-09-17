@@ -75,7 +75,7 @@ const PROJECTS = [
     language: "C++ / Arduino",
     tool: "Arduino / Tinkercad",
     desc: "An Arduino-based vehicle detection prototype that warns drivers about oncoming vehicles at blind corners, improving road safety.",
-    key: "Designed and developed a prototype for Elizabeth Seton School \u2014 South using ultrasonic sensors and an Arduino board. Built the circuit in Tinkercad, drafted enclosure and mounting layouts in AutoCAD, and tested detection logic to warn drivers before blind-corner turns.",
+    key: "Designed and developed a prototype during my time as a student at Elizabeth Seton School \u2014 South, using ultrasonic sensors and an Arduino board. Built the circuit in Tinkercad, drafted enclosure and mounting layouts in AutoCAD, and tested detection logic to warn drivers before blind-corner turns.",
     highlights: [
       "Arduino-based ultrasonic vehicle detection",
       "Circuit design and simulation in Tinkercad",

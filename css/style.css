@@ -455,7 +455,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   position: relative;
   display: block;
   width: 250px;
-  aspect-ratio: 16 / 10;
+  padding-top: 20px; /* room for the title bar; height = bar + 16:10 stage */
   border: 1px solid var(--border);
   border-radius: 9px;
   overflow: hidden;
@@ -479,7 +479,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 .ep-dots i:nth-child(3) { background: var(--green); }
 .ep-host { flex: 1; min-width: 0; font-size: 8.5px; font-weight: 500; color: var(--muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ep-go { flex: none; font-size: 9px; color: var(--accent); }
-.ep-stage { position: absolute; inset: 20px 0 0 0; background: #fff; overflow: hidden; }
+.ep-stage { position: relative; display: block; aspect-ratio: 16 / 10; background: #fff; overflow: hidden; }
 
 .entry-preview::after {
   content: "Open live site \2197";
@@ -863,9 +863,10 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   overflow: hidden;
 }
 .preview-frame {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+  width: 1200px; height: 750px; /* desktop viewport; JS scales it to fit the stage */
   border: 0; background: #fff;
+  transform-origin: top left;
   pointer-events: none; /* clicks pass through to the portal link */
 }
 .preview-portal {
