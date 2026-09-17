@@ -19,6 +19,7 @@ const SITE = {
 const PROJECTS = [
   {
     id: "help-is-on-the-way",
+    preview: "https://help-is-on-the-way.vercel.app",
     title: "Help Is on the Way",
     subtitle: "Free Mental Healthcare Access Platform",
     year: 2026,
@@ -42,6 +43,7 @@ const PROJECTS = [
   },
   {
     id: "onebyte",
+    preview: "https://onebyte-steel-cabinet.vercel.app",
     title: "OneByte Steel Cabinets",
     subtitle: "Business Website",
     year: 2026,
@@ -65,6 +67,7 @@ const PROJECTS = [
   },
   {
     id: "udspot",
+    preview: "https://udspot.vercel.app",
     title: "UDSpot",
     subtitle: "Blind Corner Vehicle Detection System",
     year: 2024,
@@ -85,6 +88,54 @@ const PROJECTS = [
       { label: "View Source", href: "https://github.com/Christocker/UDSpot" },
     ],
     tags: ["Arduino", "C++", "Ultrasonic Sensors", "AutoCAD"],
+  },
+  {
+    id: "campusos",
+    preview: "https://campusos-olive.vercel.app",
+    title: "CampusOS",
+    subtitle: "Self-Hosted Student Operating System",
+    year: 2026,
+    category: "Completed Builds",
+    language: "TypeScript",
+    tool: "Next.js / PostgreSQL",
+    desc: "A free, self-hosted platform for managing academic life \u2014 tasks, subjects, deadlines, calendars, and group collaboration \u2014 designed to feel like a premium consumer app while running entirely on your own hardware.",
+    key: "Built the full stack solo: authentication with bcrypt hashing and protected routes (Auth.js v5), a PostgreSQL database modeled with Prisma, server actions validated with Zod, and a mobile-first interface with light/dark mode. Containerized with Docker Compose and made reachable from anywhere through a Cloudflare Tunnel \u2014 no paid services and no external accounts.",
+    highlights: [
+      "Auth.js v5 (Credentials + JWT) with bcrypt hashing and protected routes",
+      "PostgreSQL + Prisma schema for subjects, tasks, calendar, and groups",
+      "Month/week/day calendar, priority sorting, and overdue detection",
+      "Groups with email invites, shared tasks, and comments",
+      "Docker + Docker Compose deployment exposed via Cloudflare Tunnel",
+    ],
+    links: [
+      { label: "Live Site", href: "https://campusos-olive.vercel.app" },
+      { label: "View Source", href: "https://github.com/Christocker/CampusOS" },
+    ],
+    tags: ["Next.js", "React", "TypeScript", "Prisma", "PostgreSQL", "Tailwind CSS", "Docker", "Auth.js"],
+  },
+  {
+    id: "solis-monitor",
+    preview: "https://solis-monitor.vercel.app/",
+    title: "Solis Monitor",
+    subtitle: "Solar Inverter Monitoring Dashboard",
+    year: 2026,
+    category: "Completed Builds",
+    language: "Python",
+    tool: "Flask / Modbus TCP",
+    desc: "Alternative monitoring software for a Solis hybrid solar inverter, reading live data over Modbus TCP and presenting it through a local dashboard and a hosted web app.",
+    key: "Built a four-layer architecture \u2014 Modbus acquisition, state-aware normalization, a Flask JSON API, and a responsive GUI \u2014 backed by a self-healing poller that rediscovers the inverter if its DHCP address changes. Added a SQLite history logger plus a Supabase cloud sync that feeds a Vercel-hosted dashboard with downsampled full-history charts. Values are never fabricated: unverified registers render as \u201c--\u201d.",
+    highlights: [
+      "Live solar, battery, grid, and load monitoring over Modbus TCP",
+      "Self-healing connection that rediscovers the inverter after DHCP changes",
+      "SQLite history logger plus cloud sync to Supabase",
+      "Vercel-hosted dashboard with second/minute/hour/day history ranges",
+      "Honest data handling \u2014 unverified registers render as \u201c--\u201d, never faked",
+    ],
+    links: [
+      { label: "Live Site", href: "https://solis-monitor.vercel.app/" },
+      { label: "View Source", href: "https://github.com/Christocker/solis-monitor" },
+    ],
+    tags: ["Python", "Flask", "Modbus TCP", "SQLite", "Supabase", "Chart.js", "Vercel"],
   },
 ];
 

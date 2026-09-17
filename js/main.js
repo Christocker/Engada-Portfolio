@@ -179,7 +179,7 @@
           ${p.tags.map((t) => `<span>${esc(t)}</span>`).join("")}
         </div>
         <div class="project-links">
-          ${p.links.map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${esc(l.label)} &nearr;</a>`).join("")}
+          ${p.links.map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} &nearr;</a>`).join("")}
         </div>
       </div>
       <div class="entry-meta">
@@ -234,28 +234,20 @@
     renderGrid(list.map(entryHTML).join(""));
     countEl.textContent = list.length === 1 ? "1 entry found" : `${list.length} entries found`;
     emptyState.hidden = list.length > 0;
-
-    $$(".project-entry", grid).forEach((card) => {
-      const open = (e) => {
-        if (e.target.closest("a")) return;
-        openModal(card.dataset.id);
-      };
-      card.addEventListener("click", open);
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openModal(card.dataset.id); }
-      });
-    });
-
-    animateIn();
   };
 
-  searchInput.addEventListener("input", applyFilters);
+  let searchDebounce = null;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(applyFilters, 120);
+  });
   selCat.addEventListener("change", applyFilters);
   selSort.addEventListener("change", applyFilters);
   $("#clearFilters").addEventListener("click", () => {
     searchInput.value = "";
     selCat.value = "";
     selSort.value = "newest";
+    dropdowns.forEach((dd) => dd.refresh());
     applyFilters();
   });
 
@@ -341,8 +333,9 @@
     });
     document.addEventListener("pointerdown", (e) => { if (!ddEl.contains(e.target)) close(); });
     buildList();
+    return { refresh: () => { kbd = select.selectedIndex; paint(); } };
   };
-  $$(".dd").forEach(initDropdown);
+  const dropdowns = $$(".dd").map(initDropdown);
 
   applyFilters();
 
@@ -359,6 +352,10 @@
   const modalKey = $("#modalKey");
   const modalHighlights = $("#modalHighlights");
   const modalLinks = $("#modalLinks");
+  const previewBox = $("#modalPreview");
+  const previewUrl = $("#modalPreviewUrl");
+  const previewOpen = $("#modalPreviewOpen");
+  const previewStage = $("#modalPreviewStage");
   let lastFocused = null;
 
   let lockPad = 0;
@@ -370,6 +367,59 @@
   const unlockScroll = () => {
     document.body.style.overflow = "";
     document.body.style.paddingRight = "";
+  };
+
+  /* ---------------- Live site preview ---------------- */
+
+  const clearPreview = () => {
+    if (previewStage) previewStage.innerHTML = "";
+  };
+
+  const setPreview = (p) => {
+    if (!previewBox) return;
+    if (!p.preview) {
+      previewBox.hidden = true;
+      clearPreview();
+      return;
+    }
+
+    let host = p.preview;
+    try { host = new URL(p.preview).host.replace(/^www\./, ""); } catch (_) {}
+    previewUrl.textContent = host;
+    previewOpen.href = p.preview;
+
+    previewBox.hidden = false;
+    clearPreview();
+
+    if (p.embeddable === false) {
+      const fb = document.createElement("div");
+      fb.className = "preview-fallback";
+      fb.innerHTML =
+        `<span>Live preview is unavailable for this site.</span>` +
+        `<a href="${esc(p.preview)}" target="_blank" rel="noopener noreferrer">Open ${esc(p.title)} &nearr;</a>`;
+      previewStage.appendChild(fb);
+      return;
+    }
+
+    const frame = document.createElement("iframe");
+    frame.className = "preview-frame";
+    frame.src = p.preview;
+    frame.loading = "lazy";
+    frame.referrerPolicy = "no-referrer";
+    frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms");
+    frame.setAttribute("title", `${p.title} live preview`);
+    frame.tabIndex = -1;
+    frame.setAttribute("aria-hidden", "true");
+
+    const portal = document.createElement("a");
+    portal.className = "preview-portal";
+    portal.href = p.preview;
+    portal.target = "_blank";
+    portal.rel = "noopener noreferrer";
+    portal.setAttribute("aria-label", `Open ${p.title} live site in a new tab`);
+
+    previewStage.appendChild(frame);
+    previewStage.appendChild(portal);
   };
 
   let modalOpen = false;
@@ -392,6 +442,7 @@
     modalLinks.innerHTML = p.links
       .map((l, i) => `<a href="${esc(l.href)}" target="_blank" rel="noopener noreferrer" class="btn ${i === 0 ? "primary" : "outline"}">${esc(l.label)} &nearr;</a>`)
       .join("");
+    setPreview(p);
 
     if (modalOpen) return;
 
@@ -411,6 +462,7 @@
     clearTimeout(closeTimer);
     closeTimer = setTimeout(() => {
       modal.hidden = true;
+      clearPreview();
       unlockScroll();
       if (lastFocused) lastFocused.focus();
     }, 300);
@@ -419,6 +471,21 @@
   $$("[data-modal-close]", modal).forEach((el) => el.addEventListener("click", closeModal));
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && modalOpen) closeModal();
+  });
+
+  /* ---------------- Project cards (delegated so re-rendered cards stay live) ---------------- */
+
+  grid.addEventListener("click", (e) => {
+    if (e.target.closest("a")) return;
+    const card = e.target.closest(".project-entry");
+    if (card) openModal(card.dataset.id);
+  });
+  grid.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const card = e.target.closest(".project-entry");
+    if (!card) return;
+    e.preventDefault();
+    openModal(card.dataset.id);
   });
 
   /* ---------------- Window close control ---------------- */

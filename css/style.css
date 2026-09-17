@@ -594,7 +594,6 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   transition: transform 0.2s var(--win-spring), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 .interests-grid .interest-card:hover { transform: scale(1.02) translateY(-4px); background: #fbfbfd; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.11), 0 2px 6px rgba(0, 0, 0, 0.05); }
-.interests-grid .reveal { transition-duration: 0.5s, 0.6s; transition-timing-function: var(--ease), var(--win-spring); }
 .interest-icon { font-size: 24px; margin-bottom: 8px; display: inline-block; transition: transform 0.2s var(--win-spring); }
 .interests-grid .interest-card:hover .interest-icon { transform: scale(1.08) translateY(-3px) rotate(2.5deg); }
 .interest-card h4 { font-size: 15px; margin-bottom: 3px; }
@@ -778,16 +777,130 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
 
 .modal-links { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
 
+/* ---------------- Live site preview ---------------- */
+
+.preview {
+  margin-top: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--win);
+}
+.preview[hidden] { display: none; }
+
+.preview-bar {
+  display: flex; align-items: center; gap: 10px;
+  height: 36px; padding: 0 12px;
+  background: var(--bar);
+  border-bottom: 1px solid var(--border-soft);
+}
+.preview-dots { display: inline-flex; gap: 6px; flex: none; }
+.preview-dots i {
+  width: 9px; height: 9px; border-radius: 50%;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15);
+}
+.preview-dots i:nth-child(1) { background: var(--red); }
+.preview-dots i:nth-child(2) { background: var(--yellow); }
+.preview-dots i:nth-child(3) { background: var(--green); }
+
+.preview-url {
+  flex: 1; min-width: 0; text-align: center;
+  font-size: 11.5px; font-weight: 500; color: var(--muted);
+  background: var(--win); border: 1px solid var(--border);
+  border-radius: 999px; padding: 4px 12px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.preview-open { flex: none; font-size: 11.5px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+.preview-open:hover { text-decoration: underline; }
+
+.preview-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #fff;
+  overflow: hidden;
+}
+.preview-frame {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0; background: #fff;
+  pointer-events: none; /* clicks pass through to the portal link */
+}
+.preview-portal {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 16px;
+  text-decoration: none;
+  background: linear-gradient(to top, rgba(10, 20, 35, 0.05), transparent 42%);
+}
+.preview-portal::after {
+  content: "Open live site \2197";
+  font-size: 12px; font-weight: 700; color: #fff;
+  background: rgba(20, 24, 30, 0.72);
+  padding: 7px 14px; border-radius: 999px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--spring);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.preview-portal:hover::after,
+.preview-portal:focus-visible::after { opacity: 1; transform: none; }
+.preview-portal:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.preview-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  text-align: center; padding: 24px;
+  color: var(--muted); font-size: 13px;
+  background: var(--bar);
+}
+.preview-fallback a { color: var(--accent); font-weight: 600; font-size: 13.5px; }
+
 /* ---------------- Reveal ---------------- */
 
+/* Uses the independent translate/scale properties (not transform) so it never
+   disables a component's own hover transitions. */
 .reveal {
   opacity: 0;
-  transform: translateY(22px) scale(0.98);
-  transition: opacity 0.5s var(--ease), transform 0.55s var(--ease);
+  translate: 0 22px;
+  scale: 0.98;
+  transition: opacity 0.5s var(--ease), translate 0.55s var(--ease), scale 0.55s var(--ease);
   transition-delay: var(--d, 0s);
 }
-.reveal.in { opacity: 1; transform: none; }
-.window.reveal.in { transition-duration: 0.75s; transition-timing-function: var(--spring); }
+.reveal.in { opacity: 1; translate: none; scale: none; }
+
+/* Components that are both reveal targets and have their own hover transitions
+   re-declare a combined transition so reveal no longer overrides them. */
+.window.reveal {
+  transition:
+    opacity 0.5s var(--ease),
+    translate 0.55s var(--ease),
+    scale 0.55s var(--ease),
+    box-shadow 0.4s var(--ease);
+  transition-delay: var(--d, 0s), var(--d, 0s), var(--d, 0s), 0s;
+}
+.window.reveal.in {
+  transition-duration: 0.75s, 0.75s, 0.75s, 0.4s;
+  transition-timing-function: var(--spring), var(--spring), var(--spring), var(--ease);
+}
+.project-entry.reveal {
+  transition:
+    opacity 0.5s var(--ease),
+    translate 0.55s var(--ease),
+    scale 0.55s var(--ease),
+    background 0.18s,
+    transform 0.18s var(--spring),
+    box-shadow 0.25s var(--ease);
+  transition-delay: var(--d, 0s), var(--d, 0s), var(--d, 0s), 0s, 0s, 0s;
+}
+.interest-card.reveal {
+  transition:
+    opacity 0.5s var(--ease),
+    translate 0.6s var(--win-spring),
+    scale 0.6s var(--win-spring),
+    transform 0.2s var(--win-spring),
+    background 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+  transition-delay: var(--d, 0s), var(--d, 0s), var(--d, 0s), 0s, 0s, 0s;
+}
 .window.reveal.min, .window.min { translate: 0 14px; opacity: 0.35; }
 
 /* ---------------- Responsive ---------------- */
@@ -821,17 +934,8 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .modal-meta { grid-template-columns: 1fr 1fr; }
   .modal-body { padding: 22px 20px; }
   .contact-socials a { width: 100%; }
-}
-
-@media (max-width: 400px) {
-  .shortcuts { gap: 8px; }
-  .sc { width: 64px; }
-  .welcome h1 { font-size: 48px; }
-  .actions .btn { width: 100%; }
-  .interests-grid { grid-template-columns: 1fr; }
-  .dock { gap: 6px; padding: 6px 8px; }
-  .dico { width: 36px; height: 36px; font-size: 18px; }
-  .dock-sep { display: none; }
+  .preview-bar { gap: 8px; padding: 0 10px; }
+  .preview-url { padding: 4px 10px; }
 }
 
 @media (hover: none) {
@@ -853,4 +957,17 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: var(--ink); l
   .dock { padding: 7px 8px; gap: 7px; }
   .dico { width: 40px; height: 40px; font-size: 19px; }
   .dock-sep { height: 36px; margin: 0 2px; }
+}
+
+/* Kept last so its rules win at <=400px (they were previously overridden by 560px) */
+@media (max-width: 400px) {
+  .shortcuts { gap: 8px; }
+  .sc { width: 64px; }
+  .welcome h1 { font-size: 48px; }
+  .actions .btn { width: 100%; }
+  .interests-grid { grid-template-columns: 1fr; }
+  .dock { gap: 6px; padding: 6px 8px; }
+  .dico { width: 36px; height: 36px; font-size: 18px; }
+  .dock-sep { display: none; }
+  .preview-open { display: none; }
 }
